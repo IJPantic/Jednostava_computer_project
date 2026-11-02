@@ -1,0 +1,168 @@
+6.listopada 2026.
+7.listopada 2026.
+8.listopada 2026.
+9.listopada 2026.
+12.listopada 2026.
+17.listopada 2026.
+
+$ [var] uzima vrijednost varijable
+[var] uzima pointer varijable
+$ [num] uzima vrijednost sa te adrese
+
+funckije zamini na nacin
+da sam kontroliras stack sa push i pop (saam pazis kolika je koja vrijednost koju pushah ili popas (pushat mos dq ali pop samo po bajt)
+staavi da na 1. adresu u stack dijelu pise koliki je stack pointer
+koristi label za ime funckije
+
+pop [registar di oces spremit nesto unutar cpu, nemore aadresa bit]
+push [varijabla/vrijednost]
+
+call [label] samo automatski radi da se postavi adresaa labela i napravi jmp nc
+ret [stack frame number] samo automatski npraavi da se skoci nazad na adresu koja ima svoj pocetak sa byteom stack frame number
+
+
+heaaaap pointer???
+da pointer je i nema free-anja
+
+CORRECTION:
+VARIJABLE NISU VRIJEDNOST KAD IH STAVIS NEGDI U KODU NEGO POINTER NA NJIHOVU VRIJEDNOST
+ako nema nista prije . u labelu unda je taj relativan zadnjem parentu, aa ako imaa nesto to je unda njegov parent (nadjes prvo takvo ime u kodu i to je parent
+DONJA CRTA NIJE DELIMITER
+funckija je uvijek relativna zadnjem labelu i funckije nema ulogu labela, tj nemos skocit na njenu adresu nego jedino je mos pozvaat, 
+tj sto se tice labela ponasa se kao i sve ostale varijable ili sta vec npr
+
+macro body/macro call (ajmo rec kao staticna func, mozes proslidit arg) (%macro ime broj_arg ...u kodu... %1 prvi parametar ...na kraju... %endmacro)
+include file (koristi stvari iz drugog filea (mogu bit na njemu sinonimi(alu op, l za [], h za [], true, false, pc -> pci itd) ili macro body ili variable
+part (X[range] range = [from, to] ili this bit)
+pokrece se priko terminala sa arg kao g++ npr
+podrzaje matematicke i logicke operacije na compile time constants (+, -, *, /, ||, &&, !, &!, |!, ^^, ^!)
+podrzaje razne baze (0xX hex, 0bX bin, X dec 'x' char)
+osnovni sintaks (path .x address label (vamo je path kao parent i ne tribas u njemu definirat da je ta var otalen ako si u njemu), ; end instructions ,odvaja argumente)
+podrzaje spajanje rijeci (# join)
+nek podrzaje velicine rijeci ()
+nek pazi na strukturu programa (code .text, data .data, heap, stack)
+kako odrediti koliko stack heap (%stack velicina, %heap pocetna velicina koju kasnije mos prosirit sa malloc)
+pocinje sa _start:
+podrzava variable (to nije sinonim kao %define, nego bas var koja se nalazi u .data dijelu)
+velicine variabla (db define byte 1 bajt, dd define doublebyte 2 bajta, dq define quadbyte 4 bajta, x dw define word ovo se koristi za arrays ili strings)
+podrzava prave funkcije koje koristi stack (func:) pa call func
+% koristi za definiranje stvari koje su upute assebleru (%define daje sinonim rijeci i necemu, %include neki file kao da je u ovom fileu)
+
+
+    MACROS
+
+%definemacro [NAME] [PARAMETERS, ...] %startmacro [CODE...]; %endmacro
+
+poziva se kao da je standardna cpu instrukcija
+
+    INCLUDES
+
+%include [FILE_NAME]
+
+includeani file se cini kao da je u trenutnom fileu
+
+    PARTS
+
+# -join, spaja dva parta
+x[from, to] -uzima samo odredjeni dio necega
+
+    OPERATORS
+
+&
+|
+!
++
+-
+*
+/
+)
+(
+
+    LABELS
+
+[PATH(opcijonalno)] .[NAME]
+
+ako se pozove kao definicija, ima vrijednost adrese na kojoj se nalazi
+sve definicije koje se tu definiraju automatski imaju prefix parenta i kad se pozivaju
+
+osnovni labeli
+.section
+section .text
+section .data
+
+    FUNCTIONS
+
+[FUNC_NAME] [PARAMETERS, ...]: [CODE...] return [PARAMETERS, ...];
+
+poziva se sa call [FUNC_NAME] [PARAMETERS, ...];
+
+parametri se stavljaju na stack
+
+svaki stack frame ima uza sebe iduce
+return address pointer
+input parameters array
+output parameters array
+
+osnovna funckija
+_start:
+
+    INSTRUCTIONS
+
+osnova instruction set + call + return
+
+    DEFINITIONS
+
+%define [NAME] [TEXT...(sve je dopusteno)] %enddefine
+
+samo se copy paste neki tekst na to mjesto
+
+    VARIABLES
+
+[NAME] [TYPE] [VALUE];
+
+type moze biti
+DB -define byte
+DD -define double
+DT -define triple
+DQ -define quad
+[X(opcijonalno)] DW -define word (word moze biti array, string bilo sta)
+
+variablama imena nisu relativna kao funkcijama i labeli nego su globalna
+spremaju se unutar .data dijela
+
+    ASSEMBLER INSTRUCTIONS
+
+%stack [VALUE] -max stack size
+%heap [VALUE] -max heap size
+
+    MEMORY STRUCTURE
+
++-----------+
+|   STACK   |
+|     ˇ     |
++-----------+
+|     ^     |
+|   HEAP    |
++-----------+
+|           |
+|DATA(.data)|
+|           |
++-----------+
+|           |
+|TEXT(.text)|
+|           |
++-----------+
+
+    SYSTEM CALLS
+
+spadaju u instrukcije a ne funkcije
+
+sys_call allocate_mem_sct(number_of_sectors) - RC = 0xFC
+
+sys_call create_task(number_of_sectors, ) - RC = 0xFE
+
+sys_call exit(error) - RC = 0xFF
+
+sys_call task_rate(period) - RC = 0xFD
+
+u dvr se ubaci 0xff, a u rc se ubaci vrijednost zeljenog sys calla, i zatim se pokrene ints x

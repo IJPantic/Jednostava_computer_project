@@ -1,0 +1,63 @@
+This document explains Jednostava CPU instruction set arhitecture and execution cycle
+
+Created on 29.10.2026. by Ivan Jonjic (IJPantic on github)
+
+Instruction parts (From LSB to MSB):
+
+    1. OP - Operation, 6-bit (ALU's operation, more on ALU later)
+
+    2. ARGS - Argument Source, 2-bit (Argument of a data source)
+
+    3. SRC - Source, 3-bit (Instruction's data source)
+
+    4. ARGO - Argument opcode, 2-bit (Argument of a opcode)
+
+    5. OPC - Opcode, 3-bit (Instruction's opcode)
+
+Graphical instruction parts (From MSB to LSB):
+
+     |    OPC    | ARGO  |    SRC    | ARGS  |          OP           |
+ ----+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+ BIT |15 |14 |13 |12 |11 |10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
+ ----+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+
+Opcodes table:
+
+    0 - PF (Pointer File), ARGO (Selects which pointer will be written to, note that write will occur only if jump condition is true) -> {0: PNT0 (PCI), 1: PNT1 (API), 2: PNT2 (PC), 3: PNT3 (AP)}
+
+    1 - A (Accumulator), no ARGO (X)
+
+    2 - RF (Register File), ARGO (Selects which register will be written to) -> {0: R0 (B), 1: R0 (C), 2: PNT2 (D), 3: PNT3 (RESR)}
+
+    3 - SF (Sector File), ARGO (Selects which sector will be written to) -> {0: SCT0 (sct PCI), 1: SCT1 (sct API), 2: SCT2 (sct PC), 3: SCT3 (sct AP)}
+
+    4 - JCR (Jump Control Register), no ARGO (X)
+
+    5 - DVR (Direct Value Register), ARGO (Selectes which 8-bit part of register will be written to) -> {bit 0: Low part, bit 1: High part} 
+
+    6 - ADRD (Address Device), no ARGO (X)
+
+    7 - INTC (Interrupt Control), ARGO (Selectes which action will be done) -> {bit 0: Enables interrupts, bit 1: Sets interrupt} (Note that setting interrupt has higher priority than enabling interrupts)
+
+Sources table:
+
+    0 - PF (Pointer File), ARGO (Selects which pointer will be read from) -> {0: PNT0 (PCI), 1: PNT1 (API), 2: PNT2 (PC), 3: PNT3 (AP)}
+
+    1 - No SRC (X), no ARGO (X)
+
+    2 - RF (Register File), ARGO (Selects which register will be read from) -> {0: R0 (B), 1: R0 (C), 2: PNT2 (D), 3: PNT3 (RESR)}
+
+    3 - SF (Sector File), ARGO (Selects which sector will be read from) -> {0: SCT0 (sct PCI), 1: SCT1 (sct API), 2: SCT2 (sct PC), 3: SCT3 (sct AP)}
+
+    4 - JCR (Jump Control Register), no ARGO (X)
+
+    5 - DVR (Direct Value Register), no ARGO (X)
+
+    6 - ADRD (Address Device), no ARGO (X)
+
+    7 - INTB (Interrupt Bus), no ARGO (X)
+
+Operations table:
+(stavai tablicu prvo graficku)
+    Arithmetic
+cin ne pisi posebno nego samo ga svugdi stavi invertiranog

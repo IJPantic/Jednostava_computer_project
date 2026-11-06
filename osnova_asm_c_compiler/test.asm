@@ -1,15 +1,4 @@
-;osnova compiler test
-%heap 256
-%stack 256
+a r0 a++
+r3 r0 a++
+pf r0 a++
 
-section .data
-char_i DT 56 ;index pointer
-
-section .text
-    _start:
-
-    ra, pfl;
-    jmp nc, inc
-
- ;the end of code
-;the end of code

@@ -88,7 +88,7 @@
     <a name="appearance" val="logisim_evolution"/>
     <a name="circuit" val="main"/>
     <a name="circuitnamedboxfixedsize" val="true"/>
-    <a name="simulationFrequency" val="1.0"/>
+    <a name="simulationFrequency" val="64.0"/>
     <comp lib="0" loc="(1000,770)" name="Pin">
       <a name="appearance" val="classic"/>
       <a name="facing" val="west"/>
@@ -167,7 +167,7 @@
       <a name="fanout" val="1"/>
       <a name="incoming" val="8"/>
     </comp>
-    <comp lib="0" loc="(1150,300)" name="Tunnel">
+    <comp lib="0" loc="(1160,300)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="CE_ROM"/>
       <a name="labelfont" val="SansSerif plain 10"/>
@@ -658,10 +658,6 @@
       <a name="label" val="CE_IO"/>
       <a name="labelfont" val="SansSerif plain 10"/>
     </comp>
-    <comp lib="0" loc="(900,750)" name="Tunnel">
-      <a name="label" val="CE_ROM"/>
-      <a name="labelfont" val="SansSerif plain 10"/>
-    </comp>
     <comp lib="0" loc="(960,750)" name="Ground">
       <a name="facing" val="west"/>
     </comp>
@@ -685,7 +681,9 @@
     <comp lib="5" loc="(880,310)" name="ROM">
       <a name="appearance" val="logisim_evolution"/>
       <a name="contents">addr/data: 8 16
-e000 a8de 9800 2500 c500
+e800 a801 7d20 a80f 520 a809 c5e0 a80a
+c5e0 a80c c5e0 a80a c5e0 a805 1520 a811
+c5e0 a800 520
 </a>
       <a name="dataWidth" val="16"/>
     </comp>
@@ -700,7 +698,7 @@ e000 a8de 9800 2500 c500
       <a name="color" val="#ffff00"/>
     </comp>
     <comp lib="6" loc="(1130,860)" name="LED">
-      <a name="color" val="#0000ff"/>
+      <a name="color" val="#00ff00"/>
     </comp>
     <comp lib="6" loc="(1130,910)" name="LED">
       <a name="color" val="#ff0000"/>
@@ -732,7 +730,7 @@ e000 a8de 9800 2500 c500
     <wire from="(1110,910)" to="(1130,910)"/>
     <wire from="(1110,930)" to="(1130,930)"/>
     <wire from="(1120,370)" to="(1170,370)"/>
-    <wire from="(1150,300)" to="(1170,300)"/>
+    <wire from="(1160,300)" to="(1170,300)"/>
     <wire from="(1170,300)" to="(1170,320)"/>
     <wire from="(1190,260)" to="(1190,320)"/>
     <wire from="(1190,370)" to="(1240,370)"/>
@@ -768,7 +766,7 @@ e000 a8de 9800 2500 c500
     <wire from="(790,280)" to="(790,800)"/>
     <wire from="(790,800)" to="(900,800)"/>
     <wire from="(840,770)" to="(970,770)"/>
-    <wire from="(900,750)" to="(900,780)"/>
+    <wire from="(880,780)" to="(900,780)"/>
     <wire from="(950,790)" to="(970,790)"/>
     <wire from="(960,750)" to="(970,750)"/>
   </circuit>
